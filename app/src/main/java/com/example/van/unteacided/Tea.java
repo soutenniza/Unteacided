@@ -68,10 +68,7 @@ public class Tea {
         return steepTime;
     }
 
-    public boolean isActive(){
-        if(activated == 1)
-            return true;
-        else
-            return false;
+    public int isActive(){
+        return activated;
     }
 }
