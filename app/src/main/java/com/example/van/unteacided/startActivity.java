@@ -1,30 +1,54 @@
 package com.example.van.unteacided;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
-public class startActivity extends Activity {
+
+public class startActivity extends SharedActivity {
 
     List<String> listHeaders;
     HashMap<String, List<String>> listChilds;
+    SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        startList();
 
         ExpandableListView listView = (ExpandableListView) findViewById(R.id.collectionExpandableListView);
 
-        startList();
+
 
         CustomExpanderAdapter expanderAdapter = new CustomExpanderAdapter(this, listHeaders, listChilds);
 
@@ -32,40 +56,58 @@ public class startActivity extends Activity {
     }
 
     private void startList() {
+        settings = getSharedPreferences(PREFS_NAME, 0);
+        boolean started = settings.getBoolean("DBstarted", false);
         TeaSQLiteHelper db = new TeaSQLiteHelper(this);
         db.deleteAll();
-        Tea t = new Tea();
-        t.setId(0);
-        t.setTempF(150);
-        t.setTempC(80);
-        t.setName("Pearls");
-        t.setType("Green");
-        t.setSteepTime(120);
-        db.insertTea(t);
-        t = new Tea();
-        t.setId(1);
-        t.setTempF(190);
-        t.setTempC(90);
-        t.setName("White Pearls");
-        t.setType("White");
-        t.setSteepTime(240);
-        db.insertTea(t);
-        t = new Tea();
-        t.setId(2);
-        t.setTempF(190);
-        t.setTempC(90);
-        t.setName("Silver Needles");
-        t.setType("White");
-        t.setSteepTime(240);
-        db.insertTea(t);
-        t = new Tea();
-        t.setId(3);
-        t.setTempF(206);
-        t.setTempC(96);
-        t.setName("Yunnan Gold");
-        t.setType("Black");
-        t.setSteepTime(120);
-        db.insertTea(t);
+
+        InputStream is = getResources().openRawResource(R.raw.teas);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        int c;
+        try{
+            c = is.read();
+            while( c != -1){
+                byteArrayOutputStream.write(c);
+                c = is.read();
+            }
+        } catch (Exception e){
+            Log.e("ERROR", e.getMessage(), e);
+        }
+
+        try{
+            JSONObject jsonObject = new JSONObject( byteArrayOutputStream.toString());
+            JSONObject jsonObjectResult = jsonObject.getJSONObject("TeaTable");
+            JSONArray jsonArray = jsonObjectResult.getJSONArray("TeaItemRow");
+            int id;
+            String name;
+            String type;
+            int tempf;
+            int tempc;
+            int steeptime;
+            int activated;
+            Tea t = new Tea();
+            for(int i = 0; i < jsonArray.length(); i++){
+                id = jsonArray.getJSONObject(i).getInt("id");
+                name = jsonArray.getJSONObject(i).getString("name");
+                type = jsonArray.getJSONObject(i).getString("type");
+                tempf = jsonArray.getJSONObject(i).getInt("tempf");
+                tempc = jsonArray.getJSONObject(i).getInt("tempc");
+                steeptime = jsonArray.getJSONObject(i).getInt("steeptime");
+                activated = jsonArray.getJSONObject(i).getInt("activated");
+                t.setId(id);
+                t.setName(name);
+                t.setType(type);
+                t.setTempF(tempf);
+                t.setTempC(tempc);
+                t.setSteepTime(steeptime);
+                t.setActivated(activated);
+                db.insertTea(t);
+            }
+
+        } catch (Exception e ){
+            Log.e("Error", e.getMessage(), e);
+        }
 
         List<Tea> teas = db.getAllTeas();
 
@@ -77,20 +119,29 @@ public class startActivity extends Activity {
         listHeaders.add("Black");
         listHeaders.add("White");
         listHeaders.add("Oolong");
+        listHeaders.add("Pu'erh");
         listHeaders.add("Herbal");
         listHeaders.add("Rooibos");
         listHeaders.add("Mate");
 
         List<String> green = new ArrayList<String>();
-        green.add("Jasmine Green Tea");
-        green.add("Jasmine Pearls");
+        ListIterator i = teas.listIterator();
+        for (Tea te: teas){
+            if(te.getType().equals("Green")){
+                green.add(te.getName());
+            }
+        }
 
         List<String> black = new ArrayList<String>();
-        black.add("Golden Monkey Black Tea");
-        black.add("Black Jasmine Pearls");
+        i = teas.listIterator();
+        for (Tea te: teas){
+            if(te.getType().equals("Black")){
+                black.add(te.getName());
+            }
+        }
 
         List<String> white = new ArrayList<String>();
-        ListIterator i = teas.listIterator();
+        i = teas.listIterator();
         for (Tea te: teas){
             if(te.getType().equals("White")){
                 white.add(te.getName());
@@ -98,25 +149,54 @@ public class startActivity extends Activity {
         }
 
         List<String> oolong = new ArrayList<String>();
-        oolong.add("High Mountain");
-        oolong.add("Four Seasons");
+        i = teas.listIterator();
+        for (Tea te: teas){
+            if(te.getType().equals("Oolong")){
+                oolong.add(te.getName());
+            }
+        }
 
         List<String> herbal = new ArrayList<String>();
-        herbal.add("Pink Lemonade");
+        i = teas.listIterator();
+        for (Tea te: teas){
+            if(te.getType().equals("Herbal")){
+                herbal.add(te.getName());
+            }
+        }
 
         List<String> rooibos = new ArrayList<String>();
-        rooibos.add("Rooibos");
+        i = teas.listIterator();
+        for (Tea te: teas){
+            if(te.getType().equals("Rooibos")){
+                rooibos.add(te.getName());
+            }
+        }
 
         List<String> mate = new ArrayList<String>();
         mate.add("Mate");
+
+        List<String> puerh = new ArrayList<String>();
+        puerh.add("Puuuuer");
 
         listChilds.put(listHeaders.get(0), green);
         listChilds.put(listHeaders.get(1), black);
         listChilds.put(listHeaders.get(2), white);
         listChilds.put(listHeaders.get(3), oolong);
-        listChilds.put(listHeaders.get(4), herbal);
-        listChilds.put(listHeaders.get(5), rooibos);
-        listChilds.put(listHeaders.get(6), mate);
+        listChilds.put(listHeaders.get(4), puerh);
+        listChilds.put(listHeaders.get(5), herbal);
+        listChilds.put(listHeaders.get(6), rooibos);
+        listChilds.put(listHeaders.get(7), mate);
+
+    }
+
+    private void startDB() throws XmlPullParserException, IOException{
+        settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("DBstarted", true);
+        editor.commit();
+
+
+        TeaSQLiteHelper db = new TeaSQLiteHelper(this);
 
     }
 

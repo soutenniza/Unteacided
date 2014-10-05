@@ -1,0 +1,186 @@
+{
+  "TeaTable": {
+    "TeaItemRow": [
+      {
+        "id": "1",
+        "name": "Silver Needle",
+        "type": "White",
+        "tempf": "180",
+        "tempc": "80",
+        "steeptime": "180",
+        "activated": "1"
+      },
+      {
+        "id": "2",
+        "name": "White Peony",
+        "type": "White",
+        "tempf": "180",
+        "tempc": "80",
+        "steeptime": "180",
+        "activated": "1"
+      },
+      {
+        "id": "3",
+        "name": "Bin Hao Yin Zhen",
+        "type": "White",
+        "tempf": "195",
+        "tempc": "90",
+        "steeptime": "240",
+        "activated": "1"
+      },
+      {
+        "id": "4",
+        "name": "Jasmine Pearls",
+        "type": "Green",
+        "tempf": "185",
+        "tempc": "85",
+        "steeptime": "180",
+        "activated": "1"
+      },
+      {
+        "id": "5",
+        "name": "Dragonwell",
+        "type": "Green",
+        "tempf": "185",
+        "tempc": "85",
+        "steeptime": "180",
+        "activated": "1"
+      },
+      {
+        "id": "6",
+        "name": "Gyokuro",
+        "type": "Green",
+        "tempf": "170",
+        "tempc": "75",
+        "steeptime": "120",
+        "activated": "1"
+      },
+      {
+        "id": "7",
+        "name": "Matcha",
+        "type": "Green",
+        "tempf": "170",
+        "tempc": "75",
+        "steeptime": "120",
+        "activated": "1"
+      },
+      {
+        "id": "8",
+        "name": "Tie Kwan Yin",
+        "type": "Oolong",
+        "tempf": "185",
+        "tempc": "85",
+        "steeptime": "240",
+        "activated": "1"
+      },
+      {
+        "id": "9",
+        "name": "Formosa Oolong",
+        "type": "Oolong",
+        "tempf": "212",
+        "tempc": "100",
+        "steeptime": "180",
+        "activated": "1"
+      },
+      {
+        "id": "10",
+        "name": "Golden Monkey",
+        "type": "Black",
+        "tempf": "212",
+        "tempc": "100",
+        "steeptime": "180",
+        "activated": "1"
+      },
+      {
+        "id": "11",
+        "name": "Earl Grey",
+        "type": "Black",
+        "tempf": "205",
+        "tempc": "96",
+        "steeptime": "240",
+        "activated": "1"
+      },
+      {
+        "id": "12",
+        "name": "English Breakfast",
+        "type": "Black",
+        "tempf": "205",
+        "tempc": "96",
+        "steeptime": "240",
+        "activated": "1"
+      },
+      {
+        "id": "13",
+        "name": "Yunnan Noir",
+        "type": "Black",
+        "tempf": "212",
+        "tempc": "100",
+        "steeptime": "180",
+        "activated": "1"
+      },
+      {
+        "id": "14",
+        "name": "Golden Pu'erh",
+        "type": "Pu'erh",
+        "tempf": "205",
+        "tempc": "96",
+        "steeptime": "240",
+        "activated": "1"
+      },
+      {
+        "id": "15",
+        "name": "Pu'erh poe",
+        "type": "Pu'erh",
+        "tempf": "212",
+        "tempc": "100",
+        "steeptime": "180",
+        "activated": "1"
+      },
+      {
+        "id": "16",
+        "name": "Chamomile",
+        "type": "Herbal",
+        "tempf": "212",
+        "tempc": "100",
+        "steeptime": "300",
+        "activated": "1"
+      },
+      {
+        "id": "17",
+        "name": "Spearmint",
+        "type": "Herbal",
+        "tempf": "212",
+        "tempc": "100",
+        "steeptime": "300",
+        "activated": "1"
+      },
+      {
+        "id": "18",
+        "name": "Green Rooibos",
+        "type": "Rooibos",
+        "tempf": "212",
+        "tempc": "100",
+        "steeptime": "300",
+        "activated": "1"
+      },
+      {
+        "id": "19",
+        "name": "Rooibos",
+        "type": "Rooibos",
+        "tempf": "212",
+        "tempc": "100",
+        "steeptime": "300",
+        "activated": "1"
+      },
+      {
+        "id": "20",
+        "name": "Green mate",
+        "type": "Mate",
+        "tempf": "185",
+        "tempc": "85",
+        "steeptime": "240",
+        "activated": "1"
+      }
+    ]
+  }
+}
