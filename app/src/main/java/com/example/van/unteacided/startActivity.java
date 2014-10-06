@@ -27,11 +27,16 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
+import it.gmariotti.cardslib.library.view.CardListView;
 
 
 public class startActivity extends SharedActivity {
@@ -39,32 +44,29 @@ public class startActivity extends SharedActivity {
     List<String> listHeaders;
     HashMap<String, List<String>> listChilds;
     SharedPreferences settings;
+    ArrayList<Card> cards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        startList();
-
-        ExpandableListView listView = (ExpandableListView) findViewById(R.id.collectionExpandableListView);
-
-
-
-        CustomExpanderAdapter expanderAdapter = new CustomExpanderAdapter(this, listHeaders, listChilds);
-
-        listView.setAdapter(expanderAdapter);
-    }
-
-    private void startList() {
         settings = getSharedPreferences(PREFS_NAME, 0);
         boolean started = settings.getBoolean("DBstarted", false);
         TeaSQLiteHelper db = new TeaSQLiteHelper(this);
 
         db.deleteAll();
-         startDB();
+        startDB();
+        intializeCards();
 
+        CardListView cardListView = (CardListView) findViewById(R.id.cardList);
+        CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(this, cards);
+        if(cardListView != null){
+            cardListView.setAdapter(cardArrayAdapter);
+        }
+    }
 
-
+    private void startList() {
+        TeaSQLiteHelper db = new TeaSQLiteHelper(this);
         List<Tea> teas = db.getAllTeas();
 
 
@@ -231,5 +233,16 @@ public class startActivity extends SharedActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void intializeCards(){
+        TeaSQLiteHelper db = new TeaSQLiteHelper(this);
+        List<Tea> teaList;
+        teaList = db.getAllTeas();
+        cards = new ArrayList<Card>();
+        for(Tea i: teaList){
+            TeaCard card = new TeaCard(this, i);
+            cards.add(card);
+        }
     }
 }
