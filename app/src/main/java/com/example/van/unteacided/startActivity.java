@@ -5,12 +5,15 @@ import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -26,10 +29,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Random;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -53,6 +58,8 @@ public class startActivity extends SharedActivity {
         settings = getSharedPreferences(PREFS_NAME, 0);
         boolean started = settings.getBoolean("DBstarted", false);
         TeaSQLiteHelper db = new TeaSQLiteHelper(this);
+        RelativeLayout rl = (RelativeLayout) findViewById(R.id.startRL);
+        rl.setBackgroundResource(R.color.welcome_background);
 
         db.deleteAll();
         startDB();
@@ -240,8 +247,26 @@ public class startActivity extends SharedActivity {
         List<Tea> teaList;
         teaList = db.getAllTeas();
         cards = new ArrayList<Card>();
+        long seed = System.nanoTime();
+        Collections.shuffle(teaList, new Random(seed));
         for(Tea i: teaList){
             TeaCard card = new TeaCard(this, i);
+            if(i.getType().equalsIgnoreCase("Green"))
+                card.setBackgroundResourceId(R.color.green_background);
+            if(i.getType().equalsIgnoreCase("Oolong"))
+                card.setBackgroundResourceId(R.color.oolong_background);
+            if(i.getType().equalsIgnoreCase("Black"))
+                card.setBackgroundResourceId(R.color.black_background);
+            if(i.getType().equalsIgnoreCase("Rooibos"))
+                card.setBackgroundResourceId(R.color.rooibos_background);
+            if(i.getType().equalsIgnoreCase("Mate"))
+                card.setBackgroundResourceId(R.color.mate_background);
+            if(i.getType().equalsIgnoreCase("White"))
+                card.setBackgroundResourceId(R.color.white_background);
+            if(i.getType().equalsIgnoreCase("Herbal"))
+                card.setBackgroundResourceId(R.color.herbal_background);
+            if(i.getType().equalsIgnoreCase("Pu'erh"))
+                card.setBackgroundResourceId(R.color.puerh_background);
             cards.add(card);
         }
     }

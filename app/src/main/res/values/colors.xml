@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="welcome_background">#d0f8ce</color>
+    <color name="welcome_color">#0d5302</color>
+    <color name="doubletap_color">#056f00</color>
+    <color name="green_background">#42bd41</color>
+    <color name="green_text">#0d5302</color>
+    <color name="black_background">#212121</color>
+    <color name="black_text">#fafafa</color>
+    <color name="white_background">#eeeeee</color>
+    <color name="white_text">#212121</color>
+    <color name="oolong_background">#afbfff</color>
+    <color name="oolong_text">#2a36b1</color>
+    <color name="herbal_background">#ffee58</color>
+    <color name="herbal_text">#f57f17</color>
+    <color name="rooibos_background">#ff7043</color>
+    <color name="rooibos_text">#bf360c</color>
+    <color name="mate_background">#ba68c8</color>
+    <color name="mate_text">#4a148c</color>
+    <color name="puerh_background">#a1887f</color>
+    <color name="puerh_text">#3e2723</color>
+</resources>

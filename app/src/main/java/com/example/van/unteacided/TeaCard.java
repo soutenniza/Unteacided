@@ -3,6 +3,7 @@ package com.example.van.unteacided;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import it.gmariotti.cardslib.library.internal.Card;
@@ -13,6 +14,7 @@ import it.gmariotti.cardslib.library.internal.Card;
 public class TeaCard extends Card {
     protected TextView teaName;
     protected TextView teaType;
+    protected RelativeLayout relativeLayout;
     protected String name;
     protected String type;
 
@@ -34,6 +36,7 @@ public class TeaCard extends Card {
     public void setupInnerViewElements(ViewGroup parent, View view){
         teaName = (TextView) parent.findViewById(R.id.teaCardName);
         teaType = (TextView) parent.findViewById(R.id.teaCardType);
+        relativeLayout = (RelativeLayout) parent.findViewById(R.id.cardBackground);
 
         if(teaName != null){
             teaName.setText(name);
