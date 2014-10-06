@@ -25,5 +25,35 @@
         android:layout_below="@id/teaCardName"
         android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="181F"
+        android:id="@+id/teaCardTempF"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/teaCardType"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="81C"
+        android:id="@+id/teaCardTempC"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/teaCardTempF"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6.9 Mins"
+        android:id="@+id/teaCardSteep"
+        android:layout_marginRight="5dp"
+        android:layout_below="@+id/teaCardType"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>
