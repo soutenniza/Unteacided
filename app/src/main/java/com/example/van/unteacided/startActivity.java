@@ -59,55 +59,11 @@ public class startActivity extends SharedActivity {
         settings = getSharedPreferences(PREFS_NAME, 0);
         boolean started = settings.getBoolean("DBstarted", false);
         TeaSQLiteHelper db = new TeaSQLiteHelper(this);
+
         db.deleteAll();
+         startDB();
 
-        InputStream is = getResources().openRawResource(R.raw.teas);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-        int c;
-        try{
-            c = is.read();
-            while( c != -1){
-                byteArrayOutputStream.write(c);
-                c = is.read();
-            }
-        } catch (Exception e){
-            Log.e("ERROR", e.getMessage(), e);
-        }
-
-        try{
-            JSONObject jsonObject = new JSONObject( byteArrayOutputStream.toString());
-            JSONObject jsonObjectResult = jsonObject.getJSONObject("TeaTable");
-            JSONArray jsonArray = jsonObjectResult.getJSONArray("TeaItemRow");
-            int id;
-            String name;
-            String type;
-            int tempf;
-            int tempc;
-            int steeptime;
-            int activated;
-            Tea t = new Tea();
-            for(int i = 0; i < jsonArray.length(); i++){
-                id = jsonArray.getJSONObject(i).getInt("id");
-                name = jsonArray.getJSONObject(i).getString("name");
-                type = jsonArray.getJSONObject(i).getString("type");
-                tempf = jsonArray.getJSONObject(i).getInt("tempf");
-                tempc = jsonArray.getJSONObject(i).getInt("tempc");
-                steeptime = jsonArray.getJSONObject(i).getInt("steeptime");
-                activated = jsonArray.getJSONObject(i).getInt("activated");
-                t.setId(id);
-                t.setName(name);
-                t.setType(type);
-                t.setTempF(tempf);
-                t.setTempC(tempc);
-                t.setSteepTime(steeptime);
-                t.setActivated(activated);
-                db.insertTea(t);
-            }
-
-        } catch (Exception e ){
-            Log.e("Error", e.getMessage(), e);
-        }
 
         List<Tea> teas = db.getAllTeas();
 
@@ -173,10 +129,20 @@ public class startActivity extends SharedActivity {
         }
 
         List<String> mate = new ArrayList<String>();
-        mate.add("Mate");
+        i = teas.listIterator();
+        for (Tea te: teas){
+            if(te.getType().equals("Mate")){
+                mate.add(te.getName());
+            }
+        }
 
         List<String> puerh = new ArrayList<String>();
-        puerh.add("Puuuuer");
+        i = teas.listIterator();
+        for (Tea te: teas){
+            if(te.getType().equals("Pu'erh")){
+                puerh.add(te.getName());
+            }
+        }
 
         listChilds.put(listHeaders.get(0), green);
         listChilds.put(listHeaders.get(1), black);
@@ -189,7 +155,7 @@ public class startActivity extends SharedActivity {
 
     }
 
-    private void startDB() throws XmlPullParserException, IOException{
+    private void startDB(){
         settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("DBstarted", true);
@@ -197,6 +163,54 @@ public class startActivity extends SharedActivity {
 
 
         TeaSQLiteHelper db = new TeaSQLiteHelper(this);
+
+        InputStream is = getResources().openRawResource(R.raw.teas);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        int c;
+        try{
+            c = is.read();
+            while( c != -1){
+                byteArrayOutputStream.write(c);
+                c = is.read();
+            }
+        } catch (Exception e){
+            Log.e("ERROR", e.getMessage(), e);
+        }
+
+        try{
+            JSONObject jsonObject = new JSONObject( byteArrayOutputStream.toString());
+            JSONObject jsonObjectResult = jsonObject.getJSONObject("TeaTable");
+            JSONArray jsonArray = jsonObjectResult.getJSONArray("TeaItemRow");
+            int id;
+            String name;
+            String type;
+            int tempf;
+            int tempc;
+            int steeptime;
+            int activated;
+            Tea t = new Tea();
+            for(int i = 0; i < jsonArray.length(); i++){
+                id = jsonArray.getJSONObject(i).getInt("id");
+                name = jsonArray.getJSONObject(i).getString("name");
+                type = jsonArray.getJSONObject(i).getString("type");
+                tempf = jsonArray.getJSONObject(i).getInt("tempf");
+                tempc = jsonArray.getJSONObject(i).getInt("tempc");
+                steeptime = jsonArray.getJSONObject(i).getInt("steeptime");
+                activated = jsonArray.getJSONObject(i).getInt("activated");
+                t.setId(id);
+                t.setName(name);
+                t.setType(type);
+                t.setTempF(tempf);
+                t.setTempC(tempc);
+                t.setSteepTime(steeptime);
+                t.setActivated(activated);
+                db.insertTea(t);
+            }
+
+        } catch (Exception e ){
+            Log.e("Error", e.getMessage(), e);
+        }
 
     }
 
