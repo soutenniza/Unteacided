@@ -20,9 +20,7 @@ import it.gmariotti.cardslib.library.internal.Card;
 public class TeaCard extends Card {
     protected TextView teaName;
     protected TextView teaType;
-    protected TextView teaTempF;
-    protected TextView teaTempC;
-    protected TextView teaSteep;
+    protected TextView teaInfo;
     protected RelativeLayout relativeLayout;
     protected String name;
     protected String type;
@@ -58,9 +56,7 @@ public class TeaCard extends Card {
     public void setupInnerViewElements(ViewGroup parent, View view){
         teaName = (TextView) parent.findViewById(R.id.teaCardName);
         teaType = (TextView) parent.findViewById(R.id.teaCardType);
-        teaTempF = (TextView) parent.findViewById(R.id.teaCardTempF);
-        teaTempC = (TextView) parent.findViewById(R.id.teaCardTempC);
-        teaSteep = (TextView) parent.findViewById(R.id.teaCardSteep);
+        teaInfo = (TextView) parent.findViewById(R.id.teaCardTempF);
 
         relativeLayout = (RelativeLayout) parent.findViewById(R.id.cardBackground);
 
@@ -76,24 +72,13 @@ public class TeaCard extends Card {
             setFont(teaType, normal);
         }
 
-        if(teaTempF != null){
-            teaTempF.setText(String.valueOf(tempF) + (char) 0x00B0 + "F" );
-            setTVColor(teaTempF);
-            setFont(teaTempF, normal);
-        }
-
-        if(teaTempC != null){
-            teaTempC.setText(String.valueOf(tempC) + (char) 0x00B0 + "C" );
-            setTVColor(teaTempC);
-            setFont(teaTempC, normal);
-        }
-
-        if(teaSteep != null){
+        if(teaInfo != null){
             float temp = ((float) steep)/60;
-            teaSteep.setText(String.valueOf(temp) + " mins");
-            setTVColor(teaSteep);
-            setFont(teaSteep, normal);
+            teaInfo.setText(String.valueOf(tempC) + (char) 0x00B0 + "C" + " | " + String.valueOf(tempF) + (char) 0x00B0 + "F" + " | " +String.valueOf(temp) + " mins" );
+            setTVColor(teaInfo);
+            setFont(teaInfo, normal);
         }
+
     }
 
     public void setTVColor(TextView tv){

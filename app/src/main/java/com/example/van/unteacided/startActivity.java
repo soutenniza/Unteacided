@@ -246,8 +246,8 @@ public class startActivity extends SharedActivity {
 
     public void intializeCards(){
         TeaSQLiteHelper db = new TeaSQLiteHelper(this);
-        Typeface bold = Typeface.createFromAsset(getAssets(), "Roboto-BoldCondensedItalic.ttf");
-        Typeface normal = Typeface.createFromAsset(getAssets(), "Roboto-LightItalic.ttf");
+        Typeface bold = Typeface.createFromAsset(getAssets(), "Roboto-BoldItalic.ttf");
+        Typeface normal = Typeface.createFromAsset(getAssets(), "Roboto-Regular.ttf");
         List<Tea> teaList;
         teaList = db.getAllTeas();
         cards = new ArrayList<Card>();
