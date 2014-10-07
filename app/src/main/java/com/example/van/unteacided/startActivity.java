@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -244,13 +246,15 @@ public class startActivity extends SharedActivity {
 
     public void intializeCards(){
         TeaSQLiteHelper db = new TeaSQLiteHelper(this);
+        Typeface bold = Typeface.createFromAsset(getAssets(), "Roboto-BoldCondensedItalic.ttf");
+        Typeface normal = Typeface.createFromAsset(getAssets(), "Roboto-LightItalic.ttf");
         List<Tea> teaList;
         teaList = db.getAllTeas();
         cards = new ArrayList<Card>();
         long seed = System.nanoTime();
         Collections.shuffle(teaList, new Random(seed));
         for(Tea i: teaList){
-            TeaCard card = new TeaCard(this, i);
+            TeaCard card = new TeaCard(this, i, bold, normal);
             if(i.getType().equalsIgnoreCase("Green"))
                 card.setBackgroundResourceId(R.color.green_background);
             if(i.getType().equalsIgnoreCase("Oolong"))

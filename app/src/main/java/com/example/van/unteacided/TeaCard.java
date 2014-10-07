@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -29,9 +30,11 @@ public class TeaCard extends Card {
     protected int tempC;
     protected int steep;
     protected Context context;
+    protected Typeface bold;
+    protected Typeface normal;
 
 
-    public TeaCard(Context c, Tea t){
+    public TeaCard(Context c, Tea t, Typeface b, Typeface n){
         this(c);
         context = c;
         this.name = t.getName();
@@ -39,6 +42,8 @@ public class TeaCard extends Card {
         this.tempF = t.getTempF();
         this.tempC = t.getTempC();
         this.steep = t.getSteepTime();
+        this.bold = b;
+        this.normal = n;
     }
 
     public TeaCard(Context c){
@@ -62,27 +67,32 @@ public class TeaCard extends Card {
         if(teaName != null){
             teaName.setText(name);
             setTVColor(teaName);
+            setFont(teaName, bold);
         }
 
         if(teaType != null){
             teaType.setText(type);
             setTVColor(teaType);
+            setFont(teaType, normal);
         }
 
         if(teaTempF != null){
             teaTempF.setText(String.valueOf(tempF) + (char) 0x00B0 + "F" );
             setTVColor(teaTempF);
+            setFont(teaTempF, normal);
         }
 
         if(teaTempC != null){
             teaTempC.setText(String.valueOf(tempC) + (char) 0x00B0 + "C" );
             setTVColor(teaTempC);
+            setFont(teaTempC, normal);
         }
 
         if(teaSteep != null){
             float temp = ((float) steep)/60;
             teaSteep.setText(String.valueOf(temp) + " mins");
             setTVColor(teaSteep);
+            setFont(teaSteep, normal);
         }
     }
 
@@ -103,7 +113,9 @@ public class TeaCard extends Card {
             tv.setTextColor(Color.parseColor(context.getString(R.string.puerh_text)));
         if(type.equalsIgnoreCase("Rooibos"))
             tv.setTextColor(Color.parseColor(context.getString(R.string.rooibos_text)));
+    }
 
-
+    public void setFont(TextView tv, Typeface typeface){
+        tv.setTypeface(typeface);
     }
 }
