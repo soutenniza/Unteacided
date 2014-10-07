@@ -4,5 +4,21 @@
     <string name="app_name">Unteacided</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="green_background">#42bd41</string>
+    <string name="green_text">#0d5302</string>
+    <string name="black_background">#212121</string>
+    <string name="black_text">#fafafa</string>
+    <string name="white_background">#eeeeee</string>
+    <string name="white_text">#212121</string>
+    <string name="oolong_background">#afbfff</string>
+    <string name="oolong_text">#2a36b1</string>
+    <string name="herbal_background">#ffee58</string>
+    <string name="herbal_text">#f57f17</string>
+    <string name="rooibos_background">#ff7043</string>
+    <string name="rooibos_text">#bf360c</string>
+    <string name="mate_background">#ba68c8</string>
+    <string name="mate_text">#4a148c</string>
+    <string name="puerh_background">#a1887f</string>
+    <string name="puerh_text">#3e2723</string>
 
 </resources>

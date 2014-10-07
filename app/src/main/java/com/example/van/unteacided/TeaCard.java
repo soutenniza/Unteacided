@@ -2,6 +2,7 @@ package com.example.van.unteacided;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +28,12 @@ public class TeaCard extends Card {
     protected int tempF;
     protected int tempC;
     protected int steep;
+    protected Context context;
 
 
     public TeaCard(Context c, Tea t){
         this(c);
+        context = c;
         this.name = t.getName();
         this.type = t.getType();
         this.tempF = t.getTempF();
@@ -58,25 +61,49 @@ public class TeaCard extends Card {
 
         if(teaName != null){
             teaName.setText(name);
-            if(type.equalsIgnoreCase("Black"))
-                teaName.setTextColor(ColorStateList.valueOf(R.color.black_text));
+            setTVColor(teaName);
         }
 
         if(teaType != null){
             teaType.setText(type);
+            setTVColor(teaType);
         }
 
         if(teaTempF != null){
             teaTempF.setText(String.valueOf(tempF) + (char) 0x00B0 + "F" );
+            setTVColor(teaTempF);
         }
 
         if(teaTempC != null){
             teaTempC.setText(String.valueOf(tempC) + (char) 0x00B0 + "C" );
+            setTVColor(teaTempC);
         }
 
         if(teaSteep != null){
             float temp = ((float) steep)/60;
             teaSteep.setText(String.valueOf(temp) + " mins");
+            setTVColor(teaSteep);
         }
+    }
+
+    public void setTVColor(TextView tv){
+        if(type.equalsIgnoreCase("Black"))
+            tv.setTextColor(Color.parseColor(context.getString(R.string.black_text)));
+        if(type.equalsIgnoreCase("White"))
+            tv.setTextColor(Color.parseColor(context.getString(R.string.white_text)));
+        if(type.equalsIgnoreCase("Green"))
+            tv.setTextColor(Color.parseColor(context.getString(R.string.green_text)));
+        if(type.equalsIgnoreCase("Oolong"))
+            tv.setTextColor(Color.parseColor(context.getString(R.string.oolong_text)));
+        if(type.equalsIgnoreCase("Herbal"))
+            tv.setTextColor(Color.parseColor(context.getString(R.string.herbal_text)));
+        if(type.equalsIgnoreCase("Mate"))
+            tv.setTextColor(Color.parseColor(context.getString(R.string.mate_text)));
+        if(type.equalsIgnoreCase("Pu'erh"))
+            tv.setTextColor(Color.parseColor(context.getString(R.string.puerh_text)));
+        if(type.equalsIgnoreCase("Rooibos"))
+            tv.setTextColor(Color.parseColor(context.getString(R.string.rooibos_text)));
+
+
     }
 }
