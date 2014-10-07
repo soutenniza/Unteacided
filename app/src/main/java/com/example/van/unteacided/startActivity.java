@@ -267,6 +267,7 @@ public class startActivity extends SharedActivity {
                 card.setBackgroundResourceId(R.color.herbal_background);
             if(i.getType().equalsIgnoreCase("Pu'erh"))
                 card.setBackgroundResourceId(R.color.puerh_background);
+            card.setShadow(true);
             cards.add(card);
         }
     }
