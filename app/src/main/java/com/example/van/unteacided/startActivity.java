@@ -2,6 +2,7 @@ package com.example.van.unteacided;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
@@ -240,6 +241,10 @@ public class startActivity extends SharedActivity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }
+        if (id == R.id.action_collection){
+            Intent i = new Intent(startActivity.this, CollectionActivity.class);
+            startActivity(i);
         }
         return super.onOptionsItemSelected(item);
     }
