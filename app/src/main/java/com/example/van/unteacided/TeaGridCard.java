@@ -1,12 +1,17 @@
 package com.example.van.unteacided;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.cengalabs.flatui.views.FlatCheckBox;
 
 import it.gmariotti.cardslib.library.internal.Card;
 
@@ -22,9 +27,12 @@ public class TeaGridCard extends Card {
     protected Context context;
     protected Typeface bold;
     protected Typeface normal;
+    protected FlatCheckBox teaActivated;
+    protected int activated;
+    protected TeaSQLiteHelper db;
 
 
-    public TeaGridCard(Context c, Tea t, Typeface b, Typeface n){
+    public TeaGridCard(Context c, Tea t, Typeface b, Typeface n, TeaSQLiteHelper db){
         this(c);
         this.t = t;
         context = c;
@@ -32,6 +40,8 @@ public class TeaGridCard extends Card {
         this.type = t.getType();
         this.bold = b;
         this.normal = n;
+        this.activated = t.isActive();
+        this.db = db;
     }
 
     public TeaGridCard(Context c){
@@ -45,6 +55,7 @@ public class TeaGridCard extends Card {
     @Override
     public void setupInnerViewElements(ViewGroup parent, View view){
         teaName = (TextView) parent.findViewById(R.id.teaGridName);
+        teaActivated = (FlatCheckBox) parent.findViewById(R.id.teaGridFlatCheck);
 
         relativeLayout = (RelativeLayout) parent.findViewById(R.id.gridBackground);
 
@@ -52,6 +63,25 @@ public class TeaGridCard extends Card {
             teaName.setText(name);
             setTVColor(teaName);
             setFont(teaName, bold);
+        }
+
+        if(teaActivated != null){
+            if(activated == 1){
+                teaActivated.setChecked(true);
+            }else
+                teaActivated.setChecked(false);
+            teaActivated.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(activated == 1)
+                        activated = 0;
+                    else
+                        activated = 1;
+                    Tea t = getTea();
+                    t.setActivated(activated);
+                    db.updateTea(t);
+                }
+            });
         }
     }
 
@@ -81,4 +111,5 @@ public class TeaGridCard extends Card {
     public void setFont(TextView tv, Typeface typeface){
         tv.setTypeface(typeface);
     }
+
 }

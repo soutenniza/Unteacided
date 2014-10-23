@@ -122,7 +122,7 @@ public class TeaSQLiteHelper extends SQLiteOpenHelper{
         cv.put(COLUMN_TEMPF, t.getTempF());
         cv.put(COLUMN_TEMPC, t.getTempC());
         cv.put(COLUMN_STEEP, t.getSteepTime());
-        cv.put(COLUMN_ACTIVATED, 1);
+        cv.put(COLUMN_ACTIVATED, t.isActive());
 
 
         int i = db.update(TABLE_TEAS, cv, COLUMN_ENTRY_ID+" = ?", new String[] {String.valueOf(t.getId())});

@@ -64,8 +64,26 @@ public class startActivity extends SharedActivity {
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.startRL);
         rl.setBackgroundResource(R.color.welcome_background);
 
-        db.deleteAll();
-        startDB();
+        if(!started)
+            startDB();
+        intializeCards();
+
+        CardListView cardListView = (CardListView) findViewById(R.id.cardList);
+        CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(this, cards);
+        if(cardListView != null){
+            cardListView.setAdapter(cardArrayAdapter);
+        }
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        setContentView(R.layout.activity_start);
+        settings = getSharedPreferences(PREFS_NAME, 0);
+        boolean started = settings.getBoolean("DBstarted", false);
+        TeaSQLiteHelper db = new TeaSQLiteHelper(this);
+        RelativeLayout rl = (RelativeLayout) findViewById(R.id.startRL);
+        rl.setBackgroundResource(R.color.welcome_background);
         intializeCards();
 
         CardListView cardListView = (CardListView) findViewById(R.id.cardList);
@@ -277,7 +295,8 @@ public class startActivity extends SharedActivity {
             if(i.getType().equalsIgnoreCase("Pu'erh"))
                 card.setBackgroundResourceId(R.color.puerh_background);
             card.setShadow(true);
-            cards.add(card);
+            if(i.isActive() == 1)
+                cards.add(card);
         }
     }
 }

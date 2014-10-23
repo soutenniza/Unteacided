@@ -78,7 +78,7 @@ public class CollectionActivity extends Activity {
         teaList = db.getAllTeas();
         cards = new ArrayList<Card>();
         for(Tea i: teaList){
-            TeaGridCard card = new TeaGridCard(this, i, bold, normal);
+            TeaGridCard card = new TeaGridCard(this, i, bold, normal, db);
             if(i.getType().equalsIgnoreCase("Green"))
                 card.setBackgroundResourceId(R.color.green_background);
             if(i.getType().equalsIgnoreCase("Oolong"))
@@ -99,5 +99,10 @@ public class CollectionActivity extends Activity {
             cards.add(card);
 
         }
+    }
+
+    public void onCheckboxClick(View view){
+
+
     }
 }

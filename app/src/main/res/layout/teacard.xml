@@ -34,7 +34,8 @@
         android:layout_marginLeft="5dp"
         android:layout_below="@+id/teaCardType"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        />
 
 
 </RelativeLayout>
