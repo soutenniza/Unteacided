@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="welcome_background">#d0f8ce</color>
-    <color name="welcome_color">#0d5302</color>
+    <color name="welcome_color">#056f00</color>
     <color name="doubletap_color">#056f00</color>
     <color name="green_background">#42bd41</color>
     <color name="green_text">#0d5302</color>
-    <color name="black_background">#212121</color>
+    <color name="black_background">#757575</color>
     <color name="black_text">#fafafa</color>
     <color name="white_background">#eeeeee</color>
     <color name="white_text">#212121</color>

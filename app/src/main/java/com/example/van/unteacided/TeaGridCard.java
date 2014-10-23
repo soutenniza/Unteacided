@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +29,7 @@ public class TeaGridCard extends Card {
     protected Context context;
     protected Typeface bold;
     protected Typeface normal;
-    protected FlatCheckBox teaActivated;
+    protected CheckBox teaActivated;
     protected int activated;
     protected TeaSQLiteHelper db;
 
@@ -55,7 +57,7 @@ public class TeaGridCard extends Card {
     @Override
     public void setupInnerViewElements(ViewGroup parent, View view){
         teaName = (TextView) parent.findViewById(R.id.teaGridName);
-        teaActivated = (FlatCheckBox) parent.findViewById(R.id.teaGridFlatCheck);
+        teaActivated = (CheckBox) parent.findViewById(R.id.teaGridFlatCheck);
 
         relativeLayout = (RelativeLayout) parent.findViewById(R.id.gridBackground);
 

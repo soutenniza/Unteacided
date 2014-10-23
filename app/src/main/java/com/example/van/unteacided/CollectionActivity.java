@@ -3,12 +3,14 @@ package com.example.van.unteacided;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import it.gmariotti.cardslib.library.internal.CardGridArrayAdapter;
 import it.gmariotti.cardslib.library.view.CardGridView;
 
 
-public class CollectionActivity extends Activity {
+public class CollectionActivity extends SharedActivity {
 
     ArrayList<Card> cards;
 
@@ -74,6 +76,8 @@ public class CollectionActivity extends Activity {
         final TeaSQLiteHelper db = new TeaSQLiteHelper(this);
         Typeface bold = Typeface.createFromAsset(getAssets(), "Roboto-BoldItalic.ttf");
         Typeface normal = Typeface.createFromAsset(getAssets(), "Roboto-Regular.ttf");
+        TextView textView = (TextView) findViewById(R.id.teaCollectionName);
+        textView.setTypeface(bold);
         List<Tea> teaList;
         teaList = db.getAllTeas();
         cards = new ArrayList<Card>();

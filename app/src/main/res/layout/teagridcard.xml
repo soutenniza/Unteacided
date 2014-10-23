@@ -6,28 +6,26 @@
     android:id="@+id/gridBackground">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="12dp"
         android:id="@+id/teaGridName"
         android:text="TeaName"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
         />
 
-    <com.cengalabs.flatui.views.FlatCheckBox
+    <CheckBox
         android:id="@+id/teaGridFlatCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="25dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:background="#0000"
-        android:text=""
-        flatui:fl_size="25dp"
-         />
+        android:layout_centerHorizontal="true"
+        android:text=""/>
 
 
 </RelativeLayout>

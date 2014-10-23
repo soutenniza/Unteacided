@@ -1,8 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/welcome_color</item>
+        <item name="colorPrimaryDark">@color/welcome_background</item>
+        <item name="colorControlNormal">#212121</item>
+        <item name="colorControlActivated">#000000</item>
     </style>
 
 </resources>

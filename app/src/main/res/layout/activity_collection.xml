@@ -9,9 +9,20 @@
     tools:context="com.example.van.unteacided.CollectionActivity"
     android:id="@+id/gridRelativeLayout">
 
+    <TextView
+        android:id="@+id/teaCollectionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Tea Collection"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/welcome_color"
+        android:textSize="25dp"/>
+
     <it.gmariotti.cardslib.library.view.CardGridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/teaCollectionName"
+        android:layout_marginTop="10dp"
         android:columnWidth = "100dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="3dp"
