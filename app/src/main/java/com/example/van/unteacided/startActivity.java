@@ -10,11 +10,16 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -53,19 +58,35 @@ public class startActivity extends SharedActivity {
     HashMap<String, List<String>> listChilds;
     SharedPreferences settings;
     ArrayList<Card> cards;
+    String[] navTitles;
+    DrawerLayout drawerLayout;
+    ListView drawerList;
+    TeaSQLiteHelper db;
+    boolean started;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        settings = getSharedPreferences(PREFS_NAME, 0);
-        boolean started = settings.getBoolean("DBstarted", false);
-        TeaSQLiteHelper db = new TeaSQLiteHelper(this);
-        RelativeLayout rl = (RelativeLayout) findViewById(R.id.startRL);
-        rl.setBackgroundResource(R.color.welcome_background);
+
+        startSettings();
 
         if(!started)
             startDB();
+        startCards();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        setContentView(R.layout.activity_start);
+
+        startSettings();
+        startCards();
+
+    }
+
+    private void startCards(){
         intializeCards();
 
         CardListView cardListView = (CardListView) findViewById(R.id.cardList);
@@ -75,22 +96,24 @@ public class startActivity extends SharedActivity {
         }
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        setContentView(R.layout.activity_start);
+    private void startSettings(){
+        startDrawer();
         settings = getSharedPreferences(PREFS_NAME, 0);
         boolean started = settings.getBoolean("DBstarted", false);
-        TeaSQLiteHelper db = new TeaSQLiteHelper(this);
+        db = new TeaSQLiteHelper(this);
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.startRL);
         rl.setBackgroundResource(R.color.welcome_background);
-        intializeCards();
+    }
 
-        CardListView cardListView = (CardListView) findViewById(R.id.cardList);
-        CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(this, cards);
-        if(cardListView != null){
-            cardListView.setAdapter(cardArrayAdapter);
-        }
+    private void startDrawer(){
+        navTitles = getResources().getStringArray(R.array.navis);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_start);
+        drawerList = (ListView) findViewById(R.id.navigationDrawerList);
+
+
+        drawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, navTitles));
+        drawerList.setOnItemClickListener(new DrawerItemClickListerner());
+
     }
 
     private void startList() {
@@ -297,6 +320,30 @@ public class startActivity extends SharedActivity {
             card.setShadow(true);
             if(i.isActive() == 1)
                 cards.add(card);
+        }
+    }
+
+    private class DrawerItemClickListerner implements ListView.OnItemClickListener{
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id){
+            selectItem(position);
+        }
+    }
+
+    private void selectItem(int p){
+        switch(p){
+            case 0:
+                CardListView cardListView = (CardListView) findViewById(R.id.cardList);
+                Collections.shuffle(cards);
+                CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(this, cards);
+                if(cardListView != null){
+                    cardListView.setAdapter(cardArrayAdapter);
+                }
+                break;
+            case 1:
+                Intent i = new Intent(startActivity.this, CollectionActivity.class);
+                startActivity(i);
+                break;
         }
     }
 }

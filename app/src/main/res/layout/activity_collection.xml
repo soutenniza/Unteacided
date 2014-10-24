@@ -7,7 +7,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.van.unteacided.CollectionActivity"
-    android:id="@+id/gridRelativeLayout">
+    android:id="@+id/gridRelativeLayout"
+    style="@style/Base.TextAppearance.AppCompat.Button">
 
     <TextView
         android:id="@+id/teaCollectionName"

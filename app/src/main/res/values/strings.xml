@@ -21,5 +21,10 @@
     <string name="puerh_background">#a1887f</string>
     <string name="puerh_text">#3e2723</string>
     <string name="title_activity_collection">Unteacided</string>
+    <string-array name="navis">
+        <item>Decide Tea</item>
+        <item>Tea Collection</item>
+        <item>Settings</item>
+    </string-array>
 
 </resources>
