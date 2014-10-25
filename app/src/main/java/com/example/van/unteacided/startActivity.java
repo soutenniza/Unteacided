@@ -1,16 +1,18 @@
 package com.example.van.unteacided;
 
-import android.app.Activity;
-import android.content.ContentValues;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.util.Xml;
 import android.view.Menu;
@@ -63,13 +65,17 @@ public class startActivity extends SharedActivity {
     ListView drawerList;
     TeaSQLiteHelper db;
     boolean started;
+    CharSequence drawerTitle;
+    CharSequence title;
+    ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        startSettings();
+
+
 
         if(!started)
             startDB();
@@ -110,9 +116,30 @@ public class startActivity extends SharedActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_start);
         drawerList = (ListView) findViewById(R.id.navigationDrawerList);
 
-
         drawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, navTitles));
         drawerList.setOnItemClickListener(new DrawerItemClickListerner());
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close){
+            public void onDrawerClosed(View view){
+                super.onDrawerClosed(view);
+                actionBar.setTitle("Unteacided");
+                actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View view){
+                super.onDrawerOpened(view);
+                actionBar.setTitle("Menu");
+                actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+                invalidateOptionsMenu();
+            }
+        };
+
+        drawerLayout.setDrawerListener(drawerToggle);
 
     }
 
@@ -280,6 +307,14 @@ public class startActivity extends SharedActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if(id == android.R.id.home){
+            if(drawerLayout.isDrawerOpen(drawerList)){
+                drawerLayout.closeDrawer(drawerList);
+            }else
+                drawerLayout.openDrawer(drawerList);
+            return true;
+        }
+
         if (id == R.id.action_settings) {
             return true;
         }
@@ -288,6 +323,14 @@ public class startActivity extends SharedActivity {
             startActivity(i);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerOpen(drawerList)){
+            drawerLayout.closeDrawer(drawerList);
+        }else
+            super.onBackPressed();
     }
 
     public void intializeCards(){
@@ -338,6 +381,7 @@ public class startActivity extends SharedActivity {
                 CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(this, cards);
                 if(cardListView != null){
                     cardListView.setAdapter(cardArrayAdapter);
+                    drawerLayout.closeDrawer(drawerList);
                 }
                 break;
             case 1:
