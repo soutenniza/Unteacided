@@ -65,8 +65,6 @@ public class startActivity extends SharedActivity {
     ListView drawerList;
     TeaSQLiteHelper db;
     boolean started;
-    CharSequence drawerTitle;
-    CharSequence title;
     ActionBarDrawerToggle drawerToggle;
 
     @Override
@@ -298,7 +296,7 @@ public class startActivity extends SharedActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.start, menu);
-        return true;
+        return false;
     }
 
     @Override

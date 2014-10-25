@@ -1,8 +1,10 @@
 package com.example.van.unteacided;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,13 +52,18 @@ public class CollectionActivity extends SharedActivity {
             }
         });
 
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.collection, menu);
+        //getMenuInflater().inflate(R.menu.collection, menu);
         return true;
     }
 
@@ -66,6 +73,9 @@ public class CollectionActivity extends SharedActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if(id == android.R.id.home){
+            super.onBackPressed();
+        }
         if (id == R.id.action_settings) {
             return true;
         }
