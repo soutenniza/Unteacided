@@ -7,5 +7,4 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:textColor="#000"
-    android:background="?android:attr/activatedBackgroundIndicator"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
