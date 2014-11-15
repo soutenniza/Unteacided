@@ -73,8 +73,9 @@ public class startActivity extends SharedActivity {
         setContentView(R.layout.activity_start);
 
 
-
-
+        startSettings();
+        settings = getSharedPreferences(PREFS_NAME, 0);
+        started = settings.getBoolean("DBstarted", false);
         if(!started)
             startDB();
         startCards();

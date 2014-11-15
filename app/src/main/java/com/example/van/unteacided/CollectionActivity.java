@@ -1,6 +1,10 @@
 package com.example.van.unteacided;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -73,6 +77,13 @@ public class CollectionActivity extends SharedActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if(id == R.id.action_add){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Test").setTitle("TITTLES!");
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
         if(id == android.R.id.home){
             super.onBackPressed();
         }
@@ -115,8 +126,22 @@ public class CollectionActivity extends SharedActivity {
         }
     }
 
-    public void onCheckboxClick(View view){
+    public class FireMissiliesDialog extends DialogFragment{
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+            builder.setMessage("Fire Missiles?").setPositiveButton("Fire", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int id){
+                    //Fire
+                }
+            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int id){
+                    //Cancel
+                }
+            });
 
+            return builder.create();
+        }
     }
 }
