@@ -28,5 +28,15 @@
         <item>Tea Collection</item>
         <item>Settings</item>
     </string-array>
+    <string-array name="type_names">
+        <item>White</item>
+        <item>Green</item>
+        <item>Oolong</item>
+        <item>Black</item>
+        <item>Herbal</item>
+        <item>Rooibos</item>
+        <item>Mate</item>\
+        <item>Puerh</item>
+    </string-array>
 
 </resources>

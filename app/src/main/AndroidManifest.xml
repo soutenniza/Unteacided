@@ -18,7 +18,7 @@
         </activity>
         <activity
             android:name=".CollectionActivity"
-            android:label="@string/title_activity_collection" >
+            android:label="@string/title_activity_collection">
         </activity>
     </application>
 

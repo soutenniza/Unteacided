@@ -121,19 +121,19 @@ public class startActivity extends SharedActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close){
             public void onDrawerClosed(View view){
                 super.onDrawerClosed(view);
                 actionBar.setTitle("Unteacided");
-                actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
+                actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View view){
                 super.onDrawerOpened(view);
                 actionBar.setTitle("Menu");
-                actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+                actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
                 invalidateOptionsMenu();
             }
         };

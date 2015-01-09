@@ -10,12 +10,17 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +64,7 @@ public class CollectionActivity extends SharedActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
     }
 
@@ -78,11 +83,61 @@ public class CollectionActivity extends SharedActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id == R.id.action_add){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Test").setTitle("TITTLES!");
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.add_tea_dialog, null);
+
+            builder.setView(dialogView);
+
+            final EditText inputName = (EditText) dialogView.findViewById(R.id.dialogName);
+            final EditText inputF = (EditText) dialogView.findViewById(R.id.editTextFDialog);
+            final EditText inputC = (EditText) dialogView.findViewById(R.id.editTextCDialog);
+            final EditText inputTime = (EditText) dialogView.findViewById(R.id.editTextSteepDialog);
+
+            final Spinner spinner = (Spinner) dialogView.findViewById(R.id.typeSpinner);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_names, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+
+            final TeaSQLiteHelper db = new TeaSQLiteHelper(this);
+
+            builder.setPositiveButton("Add Tea", new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int id){
+                            String name = inputName.getText().toString();
+                            int tempF = Integer.parseInt(inputF.getText().toString());
+                            int tempC = Integer.parseInt(inputC.getText().toString());
+                            int steep = Integer.parseInt(inputTime.getText().toString());
+                            String type = spinner.getSelectedItem().toString();
+                            Tea t = new Tea();
+                            t.setName(name);
+                            t.setType(type);
+                            t.setTempF(tempF);
+                            t.setTempC(tempC);
+                            t.setSteepTime(steep);
+                            t.setActivated(1);
+                            db.insertTea(t);
+                            finish();
+                            startActivity(getIntent());
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int id){
+                            dialogInterface.cancel();
+                        }
+                    });
 
             AlertDialog dialog = builder.create();
             dialog.show();
+
+
+            TextView textViewF = (TextView) dialog.findViewById(R.id.fDialog);
+            textViewF.setText((char) 0x00B0 + "F");
+
+            TextView textViewC = (TextView) dialog.findViewById(R.id.cDialog);
+            textViewC.setText((char) 0x00B0 + "C");
         }
         if(id == android.R.id.home){
             super.onBackPressed();
@@ -126,22 +181,4 @@ public class CollectionActivity extends SharedActivity {
         }
     }
 
-    public class FireMissiliesDialog extends DialogFragment{
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState){
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-            builder.setMessage("Fire Missiles?").setPositiveButton("Fire", new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog, int id){
-                    //Fire
-                }
-            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog, int id){
-                    //Cancel
-                }
-            });
-
-            return builder.create();
-        }
-    }
 }

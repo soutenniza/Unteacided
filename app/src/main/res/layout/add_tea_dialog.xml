@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white_background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:text="Add your own Tea"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:textSize="25dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogName"
+        android:hint="Tea Name"
+        android:text="Tea Name"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:orientation="horizontal">
+        <Spinner
+            android:id="@+id/typeSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></Spinner>
+        <EditText
+            android:id="@+id/editTextFDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Temp"
+            android:text="212"
+            android:inputType="number|numberSigned"
+            android:maxLength="3" />
+        <TextView
+            android:id="@+id/fDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/editTextCDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Temp"
+            android:text="100"
+            android:inputType="number|numberSigned"
+            android:maxLength="3" />
+        <TextView
+            android:id="@+id/cDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/editTextSteepDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Time"
+            android:text="120"
+            android:inputType="number|numberSigned"
+            android:maxLength="3" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="seconds"/>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

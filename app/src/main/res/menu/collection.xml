@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.van.unteacided.CollectionActivity" >
     <item android:id="@+id/action_add"
-        android:icon="@drawable/ic_action_new"
+        android:icon="@drawable/ic_add_black_24dp"
         android:title="Add Tea"
         app:showAsAction="ifRoom"/>
 </menu>
