@@ -38,5 +38,44 @@
         <item>Mate</item>\
         <item>Puerh</item>
     </string-array>
+    <string-array name="times">
+        <item>0:15</item>
+        <item>0:30</item>
+        <item>0:45</item>
+        <item>1:00</item>
+        <item>1:15</item>
+        <item>1:30</item>
+        <item>1:45</item>
+        <item>2:00</item>
+        <item>2:15</item>
+        <item>2:30</item>
+        <item>2:45</item>
+        <item>3:00</item>
+        <item>3:15</item>
+        <item>3:30</item>
+        <item>3:45</item>
+        <item>4:00</item>
+        <item>4:15</item>
+        <item>4:30</item>
+        <item>4:45</item>
+        <item>5:00</item>
+        <item>5:15</item>
+        <item>5:30</item>
+        <item>5:45</item>
+        <item>6:00</item>
+        <item>6:15</item>
+        <item>6:30</item>
+        <item>6:45</item>
+        <item>7:00</item>
+        <item>7:15</item>
+        <item>7:30</item>
+        <item>7:45</item>
+        <item>8:00</item>
+        <item>8:00</item>
+        <item>8:15</item>
+        <item>8:30</item>
+        <item>8:45</item>
+        <item>9:00</item>
+    </string-array>
 
 </resources>

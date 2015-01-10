@@ -1,6 +1,11 @@
 package com.example.van.unteacided;
 
 
+import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -10,20 +15,29 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.util.Xml;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
+
+import com.github.lzyzsd.circleprogress.ArcProgress;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -361,6 +375,12 @@ public class startActivity extends SharedActivity {
                 card.setBackgroundResourceId(R.color.puerh_background);
             card.setShadow(true);
             if(i.isActive() == 1)
+                card.setOnClickListener(new Card.OnCardClickListener() {
+                    @Override
+                    public void onClick(Card card, View view) {
+                        openDialog(card);
+                    }
+                });
                 cards.add(card);
         }
     }
@@ -388,5 +408,110 @@ public class startActivity extends SharedActivity {
                 startActivity(i);
                 break;
         }
+    }
+
+    private void openDialog(Card card){
+        final int time = ((TeaCard) card).steep;
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.timer_dialog, null);
+
+        builder.setView(dialogView).setNegativeButton("Close", new DialogInterface.OnClickListener(){
+           @Override
+            public void onClick(DialogInterface dialogInterface, int id){
+               dialogInterface.cancel();
+           }
+        });
+
+        final Spinner spinner = (Spinner) dialogView.findViewById(R.id.timeSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.times, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(time/15 - 1);
+
+        final ArcProgress arcProgress = (ArcProgress) dialogView.findViewById(R.id.arc_progress);
+        if(((TeaCard) card).type.equalsIgnoreCase("Green")){
+            arcProgress.setFinishedStrokeColor(getResources().getColor(R.color.green_text));
+            arcProgress.setUnfinishedStrokeColor(getResources().getColor(R.color.green_background));
+            arcProgress.setTextColor(getResources().getColor(R.color.green_background));
+        }
+        if(((TeaCard) card).type.equalsIgnoreCase("Oolong")){
+            arcProgress.setFinishedStrokeColor(getResources().getColor(R.color.oolong_text));
+            arcProgress.setUnfinishedStrokeColor(getResources().getColor(R.color.oolong_background));
+            arcProgress.setTextColor(getResources().getColor(R.color.oolong_background));
+        }
+        if(((TeaCard) card).type.equalsIgnoreCase("Pu'erh")){
+            arcProgress.setFinishedStrokeColor(getResources().getColor(R.color.puerh_text));
+            arcProgress.setUnfinishedStrokeColor(getResources().getColor(R.color.puerh_background));
+            arcProgress.setTextColor(getResources().getColor(R.color.puerh_background));
+        }
+        if(((TeaCard) card).type.equalsIgnoreCase("Herbal")){
+            arcProgress.setFinishedStrokeColor(getResources().getColor(R.color.herbal_background));
+            arcProgress.setUnfinishedStrokeColor(getResources().getColor(R.color.herbal_text));
+            arcProgress.setTextColor(getResources().getColor(R.color.herbal_text));
+        }
+        if(((TeaCard) card).type.equalsIgnoreCase("Rooibos")){
+            arcProgress.setFinishedStrokeColor(getResources().getColor(R.color.rooibos_text));
+            arcProgress.setUnfinishedStrokeColor(getResources().getColor(R.color.rooibos_background));
+            arcProgress.setTextColor(getResources().getColor(R.color.rooibos_background));
+        }
+        if(((TeaCard) card).type.equalsIgnoreCase("Mate")){
+            arcProgress.setFinishedStrokeColor(getResources().getColor(R.color.mate_text));
+            arcProgress.setUnfinishedStrokeColor(getResources().getColor(R.color.mate_background));
+            arcProgress.setTextColor(getResources().getColor(R.color.mate_background));
+        }
+
+        final Button button = (Button) dialogView.findViewById(R.id.stopStartButton);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button.setClickable(false);
+                button.setText("Stop");
+
+                final long temp = (spinner.getSelectedItemPosition() + 1)*15*1000;
+                CountDownTimer timer = new CountDownTimer(temp, 100){
+                    public void onTick(long millisUntilFinished){
+                        float progress =  ((float)millisUntilFinished/temp);
+                        progress = 1 - progress;
+                        progress *= 100;
+                        arcProgress.setProgress((int) (progress));
+                        int minutes = (int) (millisUntilFinished/1000) / 60;
+                        int seconds = (int) (millisUntilFinished/1000) % 60;
+
+                        arcProgress.setBottomText(millisToMin(minutes,seconds) + " left");
+                    }
+
+                    public void onFinish(){
+                        arcProgress.setProgress(100);
+                        arcProgress.setBottomText("Done!");
+                        button.setText("Start");
+                        button.setClickable(true);
+                        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(getApplicationContext())
+                                .setSmallIcon(R.drawable.ic_launcher)
+                                .setContentTitle("Unteacided")
+                                .setContentText("Your Tea is ready!");
+                        NotificationManager manager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                        manager.notify(001, nBuilder.build());
+                        Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        vibrator.vibrate(1000);
+                    }
+                }.start();
+
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    private String millisToMin(int m, int s){
+        if(s == 0){
+            return String.format("%d:00", m);
+        }else
+            return String.format("%d:%02d", m, s);
     }
 }
