@@ -2,18 +2,12 @@ package com.example.van.unteacided;
 
 
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.content.res.XmlResourceParser;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -22,7 +16,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
-import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,45 +23,30 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Random;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
 import it.gmariotti.cardslib.library.view.CardListView;
 
 
-public class startActivity extends SharedActivity {
+public class settingsActivity extends SharedActivity {
 
     List<String> listHeaders;
     HashMap<String, List<String>> listChilds;
@@ -86,15 +64,12 @@ public class startActivity extends SharedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_settings);
 
 
         startSettings();
         settings = getSharedPreferences(PREFS_NAME, 0);
         started = settings.getBoolean("DBstarted", false);
-        if(!started)
-            startDB();
-        startCards();
     }
 
     @Override
@@ -103,8 +78,6 @@ public class startActivity extends SharedActivity {
         setContentView(R.layout.activity_start);
 
         startSettings();
-        startCards();
-
     }
 
     private void startCards(){
@@ -239,11 +212,10 @@ public class startActivity extends SharedActivity {
         }
 
         if (id == R.id.action_settings) {
-            Intent i = new Intent(startActivity.this, settingsActivity.class);
-            startActivity(i);
+            return true;
         }
         if (id == R.id.action_collection){
-            Intent i = new Intent(startActivity.this, CollectionActivity.class);
+            Intent i = new Intent(settingsActivity.this, CollectionActivity.class);
             startActivity(i);
         }
         return super.onOptionsItemSelected(item);
@@ -315,13 +287,9 @@ public class startActivity extends SharedActivity {
                 }
                 break;
             case 1:
-                Intent i = new Intent(startActivity.this, CollectionActivity.class);
+                Intent i = new Intent(settingsActivity.this, CollectionActivity.class);
                 startActivity(i);
                 break;
-            /*case 2:
-                Intent in = new Intent(startActivity.this, settingsActivity.class);
-                startActivity(in);
-                break;*/
         }
     }
 

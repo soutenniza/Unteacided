@@ -6,6 +6,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="64dp"
+        android:id="@+id/timerTitle"
         android:text="Tea Timer"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
@@ -33,13 +34,14 @@
             android:id="@+id/stopStartButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:text="Start"
             android:textColor="@color/oolong_text"/>
         <Spinner
             android:id="@+id/timeSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:layout_toRightOf="@id/stopStartButton">
             </Spinner>
         </RelativeLayout>

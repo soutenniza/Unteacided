@@ -83,6 +83,9 @@ public class CollectionActivity extends SharedActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id == R.id.action_add){
+
+            Typeface bold = Typeface.createFromAsset(getAssets(), "Roboto-BoldItalic.ttf");
+            Typeface normal = Typeface.createFromAsset(getAssets(), "Roboto-Regular.ttf");
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
             LayoutInflater inflater = this.getLayoutInflater();
@@ -90,10 +93,16 @@ public class CollectionActivity extends SharedActivity {
 
             builder.setView(dialogView);
 
+            TextView title = (TextView) dialogView.findViewById(R.id.addTitle);
+            title.setTypeface(bold);
             final EditText inputName = (EditText) dialogView.findViewById(R.id.dialogName);
             final EditText inputF = (EditText) dialogView.findViewById(R.id.editTextFDialog);
             final EditText inputC = (EditText) dialogView.findViewById(R.id.editTextCDialog);
             final EditText inputTime = (EditText) dialogView.findViewById(R.id.editTextSteepDialog);
+            inputName.setTypeface(normal);
+            inputF.setTypeface(normal);
+            inputC.setTypeface(normal);
+            inputTime.setTypeface(normal);
 
             final Spinner spinner = (Spinner) dialogView.findViewById(R.id.typeSpinner);
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_names, android.R.layout.simple_spinner_item);
