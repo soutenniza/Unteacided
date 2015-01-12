@@ -4,6 +4,7 @@ package com.example.van.unteacided;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -87,7 +88,7 @@ public class startActivity extends SharedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
+        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "Roboto-Regular.ttf");
 
         startSettings();
         settings = getSharedPreferences(PREFS_NAME, 0);
@@ -101,7 +102,7 @@ public class startActivity extends SharedActivity {
     protected void onResume(){
         super.onResume();
         setContentView(R.layout.activity_start);
-
+        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "Roboto-Regular.ttf");
         startSettings();
         startCards();
 
@@ -285,7 +286,7 @@ public class startActivity extends SharedActivity {
             if(i.getType().equalsIgnoreCase("Pu'erh"))
                 card.setBackgroundResourceId(R.color.puerh_background);
             card.setShadow(true);
-            if(i.isActive() == 1)
+            if(i.isActive() == 1) {
                 card.setOnClickListener(new Card.OnCardClickListener() {
                     @Override
                     public void onClick(Card card, View view) {
@@ -293,6 +294,7 @@ public class startActivity extends SharedActivity {
                     }
                 });
                 cards.add(card);
+            }
         }
     }
 
@@ -418,7 +420,7 @@ public class startActivity extends SharedActivity {
         }
         if(((TeaCard) c).type.equalsIgnoreCase("Pu'erh")){
             arcProgress.setFinishedStrokeColor(getResources().getColor(R.color.puerh_text));
-            arcProgress.setUnfinishedStrokeColor(getResources().getColor(R.color.puerh_background));
+        arcProgress.setUnfinishedStrokeColor(getResources().getColor(R.color.puerh_background));
             arcProgress.setTextColor(getResources().getColor(R.color.puerh_background));
         }
         if(((TeaCard) c).type.equalsIgnoreCase("Herbal")){
@@ -443,6 +445,13 @@ public class startActivity extends SharedActivity {
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle("Unteacided")
                 .setContentText("Your " + type + " Tea is ready!");
+        Intent intent = new Intent(getApplicationContext(), startActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+        nBuilder.setContentIntent(pendingIntent);
+        nBuilder.setDeleteIntent(pendingIntent);
+        nBuilder.setAutoCancel(true);
+
+
         NotificationManager manager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
         manager.notify(001, nBuilder.build());
         Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);

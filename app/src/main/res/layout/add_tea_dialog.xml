@@ -24,13 +24,8 @@
         />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Spinner
-            android:id="@+id/typeSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            ></Spinner>
         <EditText
             android:id="@+id/editTextFDialog"
             android:layout_width="wrap_content"
@@ -74,9 +69,11 @@
             android:layout_height="wrap_content"
             android:text="seconds"
             android:textSize="15dp"/>
-
-
-
     </LinearLayout>
+    <Spinner
+        android:id="@+id/typeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ></Spinner>
 
 </LinearLayout>
